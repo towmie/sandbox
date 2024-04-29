@@ -1,12 +1,32 @@
+import { format } from "date-fns";
+import Heading from "./ui/Heading";
+import Img from "./ui/Img";
+import styled from "styled-components";
+import CityName from "./ui/CityName";
+
+const Container = styled.div`
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--color-grey-200);
+`;
 function TodaysSummary({ city }) {
-  const { location, current } = city;
+  const {
+    location: { name },
+    current: { temp_c, condition, feelslike_c, last_updated },
+  } = city;
+
   return (
     <div>
-      <h4>{current.temp_c}</h4>
-      <span>Feels like: {current.feelslike_c}</span>
-      <p>{current.last_updated}</p>
-      <p>{current.condition.text}</p>
-      <h2>{location.name}</h2>
+      <Img src={condition.icon} alt="" />
+      <Heading as="h1" type="primary">
+        {temp_c}°
+      </Heading>
+      <p>{format(new Date(last_updated), "EEEE do")}</p>
+      <Container>
+        <span>Feels like: {feelslike_c}</span>
+        <p>{condition.text}</p>
+        {name && <CityName name={name} />}
+      </Container>
     </div>
   );
 }
