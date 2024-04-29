@@ -3,6 +3,18 @@ import { KEY } from "./constants/constants";
 import { URL } from "./constants/constants";
 import { useWeather } from "./context/watherContext";
 import WeekListItem from "./WeekListItem";
+import styled from "styled-components";
+
+const StyledWeekList = styled.div`
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  gap: 10px;
+
+  @media (max-width: 991px) {
+    flex-wrap: wrap;
+  }
+`;
 
 function WeekList() {
   const [weekForecast, setWeekForecast] = useState([]);
@@ -36,11 +48,11 @@ function WeekList() {
   );
 
   return (
-    <div>
-      {weekForecast.forecastday?.map((el) => (
-        <WeekListItem key={Math.random()}>{el.date}</WeekListItem>
+    <StyledWeekList>
+      {weekForecast.forecastday?.map((forecast) => (
+        <WeekListItem key={Math.random()} forecast={forecast} />
       ))}
-    </div>
+    </StyledWeekList>
   );
 }
 

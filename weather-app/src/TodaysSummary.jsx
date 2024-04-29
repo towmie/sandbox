@@ -9,6 +9,7 @@ const Container = styled.div`
   margin-top: 2rem;
   border-top: 1px solid var(--color-grey-200);
 `;
+
 function TodaysSummary({ city }) {
   const {
     location: { name },
@@ -23,10 +24,14 @@ function TodaysSummary({ city }) {
       </Heading>
       <p>{format(new Date(last_updated), "EEEE do")}</p>
       <Container>
-        <span>Feels like: {feelslike_c}</span>
-        <p>{condition.text}</p>
-        {name && <CityName name={name} />}
+        <span>
+          Feels like: <b>{feelslike_c}°</b>
+        </span>
+        <p>
+          <b>{condition.text}</b>
+        </p>
       </Container>
+      <Container>{name && <CityName name={name} />}</Container>
     </div>
   );
 }
