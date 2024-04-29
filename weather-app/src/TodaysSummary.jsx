@@ -8,31 +8,36 @@ const Container = styled.div`
   padding-top: 2rem;
   margin-top: 2rem;
   border-top: 1px solid var(--color-grey-200);
+  width: 100%;
+  text-align: center;
 `;
 
-function TodaysSummary({ city }) {
-  const {
-    location: { name },
-    current: { temp_c, condition, feelslike_c, last_updated },
-  } = city;
+const StyledTodaysSummary = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+function TodaysSummary({ forecast }) {
+  const { name, currentTemp, lastUpdated, condition, feelsLikeTemp } = forecast;
 
   return (
-    <div>
+    <StyledTodaysSummary>
       <Img src={condition.icon} alt="" />
       <Heading as="h1" type="primary">
-        {temp_c}°
+        {currentTemp}°
       </Heading>
-      <p>{format(new Date(last_updated), "EEEE do")}</p>
+      <p>{format(new Date(lastUpdated), "EEEE do")}</p>
       <Container>
         <span>
-          Feels like: <b>{feelslike_c}°</b>
+          Feels like: <b>{feelsLikeTemp}°</b>
         </span>
         <p>
           <b>{condition.text}</b>
         </p>
       </Container>
       <Container>{name && <CityName name={name} />}</Container>
-    </div>
+    </StyledTodaysSummary>
   );
 }
 

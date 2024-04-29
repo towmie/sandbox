@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import WeekList from "../WeekList";
+import Heading from "./Heading";
+import Highlights from "../Highlights";
+import { useWeather } from "../context/watherContext";
+import Spinner from "./Spinner";
 
 const StyledMainContainer = styled.main`
   border-top-right-radius: calc(var(--border-radius-lg) * 2);
@@ -12,7 +16,6 @@ const StyledMainContainer = styled.main`
 `;
 
 const StyledContainer = styled.div`
-  max-width: 120rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -20,23 +23,34 @@ const StyledContainer = styled.div`
 `;
 
 const StyledHeader = styled.header`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  /* display: flex;
+  justify-content: fl;
+  align-items: center; */
+  margin-bottom: 4rem;
 `;
 
 function MainContainer() {
+  const { isLoading } = useWeather();
+  function getGreeting() {
+    const currentTime = new Date().getHours();
+
+    if (currentTime >= 5 && currentTime < 12) {
+      return "Good morning";
+    } else if (currentTime >= 12 && currentTime < 18) {
+      return "Good afternoon";
+    } else {
+      return "Good evening";
+    }
+  }
+
   return (
     <StyledMainContainer>
       <StyledHeader>
-        <div>
-          <button>°C</button>
-          <button>°F</button>
-        </div>
+        <Heading as="h2">{getGreeting()}</Heading>
       </StyledHeader>
       <StyledContainer>
         <WeekList />
-        <div>Todays Higlights</div>
+        {!isLoading && <Highlights />}
       </StyledContainer>
     </StyledMainContainer>
   );

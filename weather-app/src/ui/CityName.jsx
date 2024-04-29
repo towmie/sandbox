@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Heading from "./Heading";
 
 const StyledBg = styled.div`
-  padding: 3rem;
+  padding: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
